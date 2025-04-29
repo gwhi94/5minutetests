@@ -1,1 +1,131 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>5 Minute Tests</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <style>
+    body {
+      background-color: #fceabb;
+      color: #3a3a3a;
+      font-family: monospace;
+      padding: 1.5rem;
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .card {
+      background: #fff5e1;
+      border: 2px solid #3a3a3a;
+      padding: 1.5rem;
+    }
+    form, table {
+      width: 100%;
+    }
+    input, textarea, button {
+      display: block;
+      width: 100%;
+      margin-bottom: 1rem;
+      padding: 0.5rem;
+    }
+    button {
+      background: #ff8c42;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #e6732f;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 0.5rem;
+      border-bottom: 1px solid #aaa;
+      text-align: left;
+    }
+    th {
+      border-bottom: 2px solid #3a3a3a;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🕹️ 5 Minute Tests</h1>
+  <p style="text-align:center;">Submit simple A/B test ideas, climb the leaderboard, and win by year-end.</p>
+
+  <div class="container">
+    <div class="card">
+      <h2>🎯 Submit a Test Idea</h2>
+      <form id="testForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="text" name="title" placeholder="Test Title" required>
+        <input type="text" name="hypothesis" placeholder="Hypothesis" required>
+        <input type="url" name="url" placeholder="Page URL" required>
+        <textarea name="description" placeholder="Description" required></textarea>
+        <button type="submit">Submit</button>
+      </form>
+      <p id="thanksMessage" style="display:none; color:green; font-weight:bold; text-align:center;">🎉 Thanks for your submission!</p>
+    </div>
+
+    <div class="card">
+      <h2>🏆 Leaderboard</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Tests</th>
+            <th>Revenue</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Jess</td><td>6</td><td>£12,000</td></tr>
+          <tr><td>Mark</td><td>4</td><td>£9,500</td></tr>
+          <tr><td>Asha</td><td>5</td><td>£8,900</td></tr>
+          <tr><td>George</td><td>3</td><td>£7,600</td></tr>
+          <tr><td>Leah</td><td>2</td><td>£4,300</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      emailjs.init("UJHAd7FnRzkSGl-32");
+    })();
+
+    document.getElementById('testForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const serviceID = 'service_tlkip6k';
+      const templateID = 'template_enzvpza';
+
+      const form = e.target;
+      const templateParams = {
+        to_email: 'gwhi94@gmail.com',
+        name: form.name.value,
+        title: form.title.value,
+        hypothesis: form.hypothesis.value,
+        url: form.url.value,
+        description: form.description.value,
+      };
+
+      emailjs.send(serviceID, templateID, templateParams)
+        .then(() => {
+          form.style.display = 'none';
+          document.getElementById('thanksMessage').style.display = 'block';
+        }, (error) => {
+          console.error('FAILED...', error);
+        });
+    });
+  </script>
+
+</body>
+</html>
